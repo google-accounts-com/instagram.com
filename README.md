@@ -1,1 +1,1 @@
-# instagram.com
+# lnsta.reading.com
